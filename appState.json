@@ -1,0 +1,141 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "ccf387bc-e72f-42a4-a791-76175e9e2237": {
+        "id": "ccf387bc-e72f-42a4-a791-76175e9e2237",
+        "parent": null,
+        "name": "dwd",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "8be7f0fa-d017-4649-a016-d6c61458cca0"
+        ],
+        "isRemovable": false,
+        "filePath": "dwd"
+      },
+      "8be7f0fa-d017-4649-a016-d6c61458cca0": {
+        "id": "8be7f0fa-d017-4649-a016-d6c61458cca0",
+        "parent": "ccf387bc-e72f-42a4-a791-76175e9e2237",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "dwd/lambda.js",
+        "code": "let AWS = require('aws-sdk');\nconst sns = new AWS.SNS();\n\nexports.handler = function (event, context, callback) {\n\n    sns.publish({\n        Message: 'hello',\n        MessageAttributes: {},\n        MessageStructure: 'String',\n        TopicArn: 'arn:aws:sns:us-east-1:318300609668:TestSNS'\n    }).promise()\n        .then(data => {\n            // your code goes here\n        })\n        .catch(err => {\n            // error handling goes here\n        });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "apigusEast1TestAPItestdelete",
+            "config": {}
+          }
+        ]
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "ccf387bc-e72f-42a4-a791-76175e9e2237",
+    "openFiles": [
+      "8be7f0fa-d017-4649-a016-d6c61458cca0"
+    ],
+    "currentFileId": "8be7f0fa-d017-4649-a016-d6c61458cca0",
+    "resources": {
+      "apigusEast1TestAPItestdelete": {
+        "name": "apigusEast1TestAPItestdelete",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 1,
+          "apiName": "TestAPI",
+          "apiId": "0itznun7w3",
+          "endpointType": "EDGE",
+          "rootResourceId": "h2lelj6j7k",
+          "existingResources": {
+            "/hiru/test": "2b8zt0",
+            "/testPathWithSlash": "2rkw74",
+            "/hiru": "3nc52b",
+            "/hiru/sample": "4226gg",
+            "/hiru/sqstest": "88gr2y",
+            "/MyLambda": "98nqbj",
+            "/fintech": "f1vucr",
+            "/": "h2lelj6j7k",
+            "/testWithSlash": "q4m4g1",
+            "/testtwospeciallambda": "q4szm3",
+            "/testtwospecialkumutest": "wey3lk",
+            "/hiru/snscheck": "wok1ku"
+          },
+          "resourceMode": 1,
+          "resourcePath": "/hiru/test",
+          "resourceName": "test",
+          "resourceId": "2b8zt0",
+          "restMethod": "DELETE",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 1,
+          "stageName": "Test",
+          "stageDeploymentId": "0pz3ao",
+          "mode": 1
+        }
+      },
+      "snsusEast1TestSNS": {
+        "name": "snsusEast1TestSNS",
+        "type": "SNS",
+        "config": {
+          "topicMode": 1,
+          "topicName": "TestSNS",
+          "topicArn": "arn:aws:sns:us-east-1:318300609668:TestSNS",
+          "topicRegion": "us-east-1",
+          "snsType": 0,
+          "subscriptions": []
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "language": "javascript",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "dwd",
+    "projectDescription": "",
+    "projectVersion": "1.1.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1564654937003
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "dwd",
+      "branches": [],
+      "url": "https://github.com/zgma-test/dwd"
+    }
+  }
+}
