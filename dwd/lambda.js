@@ -8,7 +8,7 @@ exports.handler = function (event, context, callback) {
         Message: 'hello',
         MessageAttributes: {},
         MessageStructure: 'String',
-        TopicArn: 'arn:aws:sns:us-east-1:318300609668:TestSNS'
+        TopicArn: 'arn:aws:sns:us-east-1:318300609668:dynamodb'
     }).promise()
         .then(data => {
             // your code goes here
