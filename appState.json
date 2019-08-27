@@ -1,28 +1,28 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "ccf387bc-e72f-42a4-a791-76175e9e2237": {
-        "id": "ccf387bc-e72f-42a4-a791-76175e9e2237",
+      "bd4ffde0-34d5-4749-b49b-1ff4265006bf": {
+        "id": "bd4ffde0-34d5-4749-b49b-1ff4265006bf",
         "parent": null,
         "name": "dwd",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "8be7f0fa-d017-4649-a016-d6c61458cca0"
+          "84bbe77e-500d-4a19-a7ff-a982d237c3c9"
         ],
         "isRemovable": false,
         "filePath": "dwd"
       },
-      "8be7f0fa-d017-4649-a016-d6c61458cca0": {
-        "id": "8be7f0fa-d017-4649-a016-d6c61458cca0",
-        "parent": "ccf387bc-e72f-42a4-a791-76175e9e2237",
+      "84bbe77e-500d-4a19-a7ff-a982d237c3c9": {
+        "id": "84bbe77e-500d-4a19-a7ff-a982d237c3c9",
+        "parent": "bd4ffde0-34d5-4749-b49b-1ff4265006bf",
         "name": "lambda.js",
         "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "dwd/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nconst s3 = new AWS.S3();\nconst sns = new AWS.SNS();\n\nexports.handler = function (event, context, callback) {\n\n    sns.publish({\n        Message: 'hello',\n        MessageAttributes: {},\n        MessageStructure: 'String',\n        TopicArn: 'arn:aws:sns:us-east-1:318300609668:dynamodb'\n    }).promise()\n        .then(data => {\n            // your code goes here\n        })\n        .catch(err => {\n            // error handling goes here\n        });\n\n\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n    sqs.receiveMessage({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/MyQueue`,\n        AttributeNames: ['All'],\n        MaxNumberOfMessages: '1',\n        VisibilityTimeout: '30',\n        WaitTimeSeconds: '0'\n    }).promise()\n        .then(receivedMsgData => {\n            if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {\n                let receivedMessages = receivedMsgData.Messages;\n                receivedMessages.forEach(message => {\n                    // your logic to access each message through out the loop. Each message is available under variable message \n                    // within this block\n                });\n            } else {\n                // No messages to process\n            }\n        })\n        .catch(err => {\n            // error handling goes here\n        });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -30,86 +30,56 @@
           "memory": 128,
           "layers": []
         },
-        "triggers": [
-          {
-            "resourceName": "apigusEast1TestAPItestdelete",
-            "config": {}
+        "triggers": [],
+        "testCases": {
+          "4d721e98-19bc-4289-8558-b1c236b5a47f": {
+            "id": "4d721e98-19bc-4289-8558-b1c236b5a47f",
+            "name": "Test event",
+            "functionId": "84bbe77e-500d-4a19-a7ff-a982d237c3c9",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}",
+            "eventTemplate": "hello-world"
           }
-        ]
+        }
       }
     },
     "deletedFiles": [],
-    "rootNode": "ccf387bc-e72f-42a4-a791-76175e9e2237",
+    "rootNode": "bd4ffde0-34d5-4749-b49b-1ff4265006bf",
     "openFiles": [
-      "8be7f0fa-d017-4649-a016-d6c61458cca0"
+      "84bbe77e-500d-4a19-a7ff-a982d237c3c9"
     ],
-    "currentFileId": "8be7f0fa-d017-4649-a016-d6c61458cca0",
+    "currentFileId": "84bbe77e-500d-4a19-a7ff-a982d237c3c9",
     "resources": {
-      "apigusEast1TestAPItestdelete": {
-        "name": "apigusEast1TestAPItestdelete",
-        "type": "API_GATEWAY",
+      "sqsMyQueue": {
+        "name": "sqsMyQueue",
+        "type": "SQS",
         "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "MyQueue",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/MyQueue",
           "selectedRegion": "us-east-1",
-          "apiMode": 1,
-          "apiName": "TestAPI",
-          "apiId": "0itznun7w3",
-          "endpointType": "EDGE",
-          "rootResourceId": "h2lelj6j7k",
-          "existingResources": {
-            "/hiru/test": "2b8zt0",
-            "/testPathWithSlash": "2rkw74",
-            "/hiru": "3nc52b",
-            "/hiru/sample": "4226gg",
-            "/hiru/sqstest": "88gr2y",
-            "/MyLambda": "98nqbj",
-            "/fintech": "f1vucr",
-            "/": "h2lelj6j7k",
-            "/testWithSlash": "q4m4g1",
-            "/testtwospeciallambda": "q4szm3",
-            "/testtwospecialkumutest": "wey3lk",
-            "/hiru/snscheck": "wok1ku"
-          },
-          "resourceMode": 1,
-          "resourcePath": "/hiru/test",
-          "resourceName": "test",
-          "resourceId": "2b8zt0",
-          "restMethod": "DELETE",
-          "proxyIntegration": false,
-          "enableCORS": false,
-          "stageMode": 1,
-          "stageName": "Test",
-          "stageDeploymentId": "0pz3ao",
-          "mode": 1
-        }
-      },
-      "snsusEast1TestSNS": {
-        "name": "snsusEast1TestSNS",
-        "type": "SNS",
-        "config": {
-          "topicMode": 1,
-          "topicName": "TestSNS",
-          "topicArn": "arn:aws:sns:us-east-1:318300609668:TestSNS",
-          "topicRegion": "us-east-1",
-          "snsType": 0,
-          "subscriptions": []
-        }
-      },
-      "snsusEast1dynamodb": {
-        "name": "snsusEast1dynamodb",
-        "type": "SNS",
-        "config": {
-          "topicMode": 1,
-          "topicName": "dynamodb",
-          "topicArn": "arn:aws:sns:us-east-1:318300609668:dynamodb",
-          "topicRegion": "us-east-1",
-          "snsType": 0,
-          "subscriptions": []
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": "",
+          "contentBasedDeduplication": false
         }
       }
     },
     "customTemplate": {
       "dialect": null,
-      "definitions": {}
+      "definitions": null
     },
     "envVariables": [
       {
@@ -129,6 +99,13 @@
           "version": "2.176.0",
           "dev": true,
           "notRemovable": false
+        },
+        "slappforge-sdk-aws": {
+          "name": "slappforge-sdk-aws",
+          "language": "javascript",
+          "version": "0.0.5",
+          "dev": false,
+          "notRemovable": false
         }
       }
     }
@@ -136,22 +113,16 @@
   "PROJECT_META": {
     "projectName": "dwd",
     "projectDescription": "",
-    "projectVersion": "1.1.0",
+    "projectVersion": "1.0.0",
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1564659313210
+    "lastSave": 1566882056641
   },
   "VCS_STATE": {
     "provider": "GitHub",
     "repo": {
       "name": "dwd",
-      "branches": [
-        {
-          "name": "master",
-          "hash": "c266454babc5d16c6308e1ce4a0def971dfa4dc4"
-        }
-      ],
       "url": "https://github.com/zgma-test/dwd"
     }
   }
